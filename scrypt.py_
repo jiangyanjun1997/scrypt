@@ -1,0 +1,18 @@
+#!/usr/bin/python
+
+import hashlib
+import ltc_scrypt    # Packaged with litecoin p2pool - https://github.com/coblee/p2pool
+
+header_hex = "01000000f615f7ce3b4fc6b8f61e8f89aedb1d0852507650533a9e3b10b9bbcc30639f279fcaa86746e1ef52d3edb3c4ad8259920d509bd073605c9bf1d59983752a6b06b817bb4ea78e011d012d59d4"
+header_bin = header_hex.decode('hex')
+
+hash = hashlib.sha256(hashlib.sha256(header_bin).digest()).digest()
+hash.encode('hex_codec')
+print "hash:"
+print(hash[::-1].encode('hex_codec'))    # convert from big-endian to little-endian
+
+scrypt = ltc_scrypt.getPoWHash(header_bin)
+scrypt.encode('hex_codec')
+print "scrypt:"
+print(scrypt[::-1].encode('hex_codec'))    # convert from big-endian to little-endian
+
